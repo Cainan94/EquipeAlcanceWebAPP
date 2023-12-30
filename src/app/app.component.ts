@@ -47,8 +47,10 @@ export class AppComponent {
     //   console.log("chegou a hora de trocar");
     //   newWindow = window.open('https://www.twitch.tv/Hperez22', 'com_MyDomain_myWindowForThisPurpose', 'height=960px,width=940px');
     // },60000)
+  }
 
-
+  showToolbar(){
+    return this.router.routerState.snapshot.url !== '/' && this.router.routerState.snapshot.url !== '/login'
   }
 }
 

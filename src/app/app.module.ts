@@ -51,6 +51,7 @@ import { LiveScheduleComponent } from './pages/private/live-schedule/live-schedu
 import { AddScheduleComponent } from './pages/private/live-schedule/dialogs/add-schedule/add-schedule.component';
 import { EditScheduleComponent } from './pages/private/live-schedule/dialogs/edit-schedule/edit-schedule.component';
 import { PontuacaoComponent } from './pages/private/pontuacao/pontuacao.component';
+import { EquipeAlcancePortfoliaComponent } from './pages/public/equipe-alcance-portfolia/equipe-alcance-portfolia.component';
 
 
 export const MY_DATE_FORMAT = {
@@ -80,6 +81,7 @@ export const MY_DATE_FORMAT = {
     AddScheduleComponent,
     EditScheduleComponent,
     PontuacaoComponent,
+    EquipeAlcancePortfoliaComponent,
   ],
   imports: [
     MatNativeDateModule,

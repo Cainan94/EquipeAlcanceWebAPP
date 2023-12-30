@@ -1,0 +1,29 @@
+<mat-toolbar class="toolbar">
+    <mat-toolbar-row>
+        <img src="assets/Alcance_20231228_133324_0000.png" height="100%" width="5%">
+        <h1 class="ProductName">EQUIPE ALCANCE</h1>
+        <button (click)="goToLogin()" style="color: white;" mat-icon-button class="material-symbols-outlined"
+            aria-label="Example icon-button with heart icon">
+            Login
+        </button>
+    </mat-toolbar-row>
+</mat-toolbar>
+<mat-tab-group mat-stretch-tabs="false" mat-align-tabs="center">
+    <mat-tab label="Informativo">
+        <h1  style="width: 100%; font-size: 50px; text-align: center; margin-top: 5%; font-weight: bolder;">Ultimas noticias</h1>
+        <hr>
+        <mat-card (click)="goToFormRecruiter()" class="card-recrutamento">
+            <img mat-card-image src="assets/Black_Red_Horror_Stories_YouTube_Thumbnail_1.png">
+        </mat-card>
+    </mat-tab>
+
+    <mat-tab label="Sobre">
+
+    </mat-tab>
+    <mat-tab label="Recrutamento">
+
+    </mat-tab>
+    <mat-tab label="Fale conosco">
+
+    </mat-tab>
+</mat-tab-group>
