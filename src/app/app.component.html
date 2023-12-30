@@ -1,0 +1,25 @@
+<mat-toolbar class="toolbar" *ngIf="router.routerState.snapshot.url !== '/'">
+  <mat-toolbar-row>
+    <img src="assets/Alcance_20231228_133324_0000.png" height="100%" width="5%">
+    <h1 class="ProductName">EQUIPE ALCANCE</h1>
+
+    <div class="menuButtons">
+      <button mat-button (click)="goToHome()">Inicio</button>
+      <button mat-button (click)="goToStreamers()" *ngIf="UserIsADM()">Streamers</button>
+      <button mat-button (click)="goToPontuacao()" *ngIf="UserIsADM()">Pontuação</button>
+      <button mat-button (click)="goToAgendamentos()" *ngIf="UserIsADM()">Agendamento</button>
+      <button mat-button (click)="goToWatchStreamer()">Assistir Streamer</button>
+      <button mat-button (click)="goToPontuacao()" *ngIf="!UserIsADM()">Minha pontuação</button>
+    </div>
+
+
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<!-- <iframe
+    src="https://player.twitch.tv/?channel=MegahMario&parent=infinitygroupwebapp-development"
+    height="720"
+    width="1280"
+    allowfullscreen>
+</iframe> -->
+<router-outlet></router-outlet>

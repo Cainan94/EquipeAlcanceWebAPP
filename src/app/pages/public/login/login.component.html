@@ -1,0 +1,19 @@
+<div class="masterContainer">
+    <div class="containerCerter">
+        <img class="logo" [src]="logo" alt="">
+
+        <form class="formLogin" [formGroup]="loginForm" (ngSubmit)="login()">
+            <mat-form-field  [appearance]="'outline'">
+                <mat-label>Usuário</mat-label>
+                <input matInput type="text" formControlName="username" name="username">
+            </mat-form-field>
+            <br>
+            <mat-form-field style="width: 30%;" [appearance]="'outline'">
+                <mat-label>Senha</mat-label>
+                <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" name="password">
+            </mat-form-field>
+            <br>
+            <button mat-raised-button type="submit" style="width: 25%; height: 40px; background-color: #7d6028; color: white;">Login</button>
+        </form>
+    </div>
+</div>

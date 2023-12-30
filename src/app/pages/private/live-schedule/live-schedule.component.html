@@ -1,0 +1,77 @@
+<div class="mainContainer">
+  <div class="title">
+    <h2>Listas de Agendamentos</h2>
+  </div>
+  <div class="selectRangeDate">
+    <h3>Selecione o periodo para consultar os agendamentos.</h3>
+
+    <mat-form-field class="rangeDate">
+      <mat-label>periodo de agendamento</mat-label>
+      <mat-date-range-input [formGroup]="formRangeDate" [rangePicker]="dateRangePicker" disabled>
+        <input matStartDate placeholder="Start date" formControlName="start">
+        <input matEndDate placeholder="End date" formControlName="end">
+      </mat-date-range-input>
+      <mat-hint>DD/MM/YYYY – DD/MM/YYYY</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="dateRangePicker"></mat-datepicker-toggle>
+      <mat-date-range-picker #dateRangePicker disabled="false"></mat-date-range-picker>
+    </mat-form-field>
+
+    <button mat-raised-button class="searchButton" (click)="changeDate()">
+      <mat-icon style="width: 100%; height: 100%; margin-top: 50%;">search</mat-icon>
+    </button>
+
+    <div class="buttonsOptions">
+      <button style=" margin-right: 5px;" mat-raised-button class="buttonsOptions" (click)="editSchedule()"><mat-icon
+          class="iconButton" fontIcon="edit"></mat-icon></button>
+      <button mat-raised-button (click)="addSchedule()"><mat-icon class="iconButton" fontIcon="add"></mat-icon></button>
+    </div>
+
+
+  </div>
+  <mat-divider style="margin-top: 2%;"></mat-divider>
+
+  <mat-spinner class="page-loading" *ngIf="isprocess"></mat-spinner>
+
+  <div *ngFor="let agenda of this.listSchedules" style="width: 95%; margin-left: 3%;margin-top: 2%;">
+    <mat-expansion-panel hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{agenda.dataAgendamento}}
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <div style="display: flex; flex-direction: row;">
+        <div style="text-align: center;width: 20%;">
+          <h2>Nome</h2>
+        </div>
+        <div style="text-align: center;  text-align: center;width: 20%;">
+          <h2>Horário Inicio</h2>
+        </div>
+        <div style="text-align: center; text-align: center;width: 20%;">
+          <h2>Horário Fim</h2>
+        </div>
+        <div style="text-align: center; text-align: center;width: 40%;">
+          <h2>Link</h2>
+        </div>
+      </div>
+      <div style="display: flex; flex-direction: row;" *ngFor="let streamer of agenda.streamers">
+        <mat-panel-description>
+          <div style="text-align: center;width: 20%;">
+            <h3>{{streamer.nome}}</h3>
+          </div>
+          <div style="text-align: center;  text-align: center;width: 20%;">
+            <h3>{{streamer.horaInicio}}</h3>
+          </div>
+          <div style="text-align: center; text-align: center;width: 20%;">
+            <h3>{{streamer.horaFim}}</h3>
+          </div>
+          <div (click)="openLink(streamer.link)" style="text-align: center; text-align: center;width: 40%;">
+            <h3>{{streamer.link}}</h3>
+          </div>
+
+          <mat-divider></mat-divider>
+        </mat-panel-description>
+      </div>
+    </mat-expansion-panel>
+  </div>
+</div>

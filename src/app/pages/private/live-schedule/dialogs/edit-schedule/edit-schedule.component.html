@@ -1,0 +1,62 @@
+<div class="mainContainer">
+    <div class="containerHead">
+        <h1 style="margin-left: 2%; text-align: center;">Editar horário</h1>
+    </div>
+
+    <div class="form">
+        <mat-form-field class="dataPicker">
+            <mat-label>Data Agendamento </mat-label>
+            <input matInput matInput [min]="minDate" [matDatepicker]="dateStartpicker" name="dataStartAgenda"
+                [disabled]="true" (dateInput)="selectDate($event)">
+            <mat-hint>DD/MM/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="dateStartpicker"></mat-datepicker-toggle>
+            <mat-datepicker #dateStartpicker disabled="false">
+                <mat-datepicker-actions>
+                    <button mat-button matDatepickerCancel>Cancel</button>
+                    <button mat-raised-button matDatepickerApply>Selecionar</button>
+                </mat-datepicker-actions>
+            </mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field class="dataPicker">
+            <mat-label>Streamer</mat-label>
+            <mat-select [(ngModel)]="streamerSelected" name="food" [disabled]="streamers.length  < 1">
+                <div *ngFor="let str of streamers">
+                    <mat-option [value]="str">{{str.twitchName}}</mat-option>
+                </div>
+            </mat-select>
+        </mat-form-field>
+
+        <button mat-raised-button [disabled]="streamerSelected.twitchName.trim().length < 1" (click)="trocarHorario()"
+            style="width: 25%; height: 40px; margin-left: 3%; background-color: #002c48; color: white; margin-right: 44%; margin-top: 3%;">Trocar
+            Horario</button>
+        <button [disabled]="streamerSelected.twitchName.trim().length < 1" (click)="excluirHorario()" mat-raised-button
+            style="width: 25%; height: 40px; background-color: #000; margin-top: 3%;color: white; margin-right: 3%;">Excluir
+            Horario</button>
+
+        <div *ngIf="changeTime">
+            <mat-form-field class="dataPicker">
+                <mat-label>Horario da agenda</mat-label>
+                <mat-select [(ngModel)]="timeSelected" name="food"
+                    [disabled]="streamerSelected.id!=undefined&&streamerSelected.id.trim().length < 1">
+                    <div *ngFor="let start of listOfAvailableSchedules">
+                        <mat-option [value]="start">{{start.value}}</mat-option>
+                    </div>
+                </mat-select>
+            </mat-form-field>
+            <div style="flex-direction: row; margin-left: 2%;">
+                <label><b>Observação:</b> Por padrão os agendamentos são de 01:30 Horas</label>
+            </div>
+        </div>
+
+        <div *ngIf="changeTime==true;else justCancel">
+            <button mat-raised-button (click)="this.dialogRef.close();"style="width: 25%; height: 40px; margin-left: 3%; margin-right: 44%; margin: 4%;">cancelar</button>
+            <button mat-raised-button [disabled]="streamerSelected.twitchName.trim().length < 1" (click)="Salvar()" style=" color: #fff; background-color: #2d0f01;  width: 25%; height: 40px; margin-left: 3%; margin-right: 2%; margin-left: 30%;">Salvar</button>
+        </div>
+        <ng-template #justCancel>
+            <button mat-raised-button (click)="this.dialogRef.close();"
+                style="width: 25%; height: 40px; margin-left: 3%; margin-right: 44%; margin: 4%;">cancelar</button>
+        </ng-template>
+
+    </div>
+</div>

@@ -1,0 +1,43 @@
+<div class="mainContainer">
+    <div class="containerHead">
+        <h1 style="color: white;
+        margin-left: 2%; text-align: center;">Adicionar novo Streamer</h1>
+    </div>
+
+    <div class="form">
+        <mat-form-field [appearance]="'outline'">
+            <mat-label>Usuário</mat-label>
+            <input matInput type="text" [(ngModel)]="username">
+        </mat-form-field>
+        <mat-form-field [appearance]="'outline'">
+            <mat-label>Senha</mat-label>
+            <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="password">
+        </mat-form-field>
+        <br>
+        <mat-form-field [appearance]="'outline'">
+            <mat-label>Confirme a Senha</mat-label>
+            <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="confirPasswd">
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+            <mat-label>Data de Nascimento</mat-label>
+            <input matInput [matDatepicker]="datepicker" (dateInput)="selectDate($event)" [disabled]="true" [value]="currentDate">
+            <mat-hint>DD/MM/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
+            <mat-datepicker #datepicker disabled="false">
+                <mat-datepicker-actions>
+                    <button mat-button matDatepickerCancel>Cancel</button>
+                    <button mat-raised-button matDatepickerApply>Selecionar</button>
+                </mat-datepicker-actions>
+            </mat-datepicker>
+        </mat-form-field>
+        <br>
+        <section>
+            <mat-checkbox color="warn" [(ngModel)]="isAdm">Administrador</mat-checkbox>
+        </section>
+        <br>
+        <button mat-raised-button style="width: 25%; height: 40px; margin-left: 3%; margin-right: 44%; margin-top: 3%;" (click)="cancelarAdd()">cancelar</button>
+        <button mat-raised-button
+            style="width: 25%; height: 40px; background-color: #000; margin-top: 3%;color: white; margin-right: 3%;" (click)="addStreamButton()">Adicionar</button>
+    </div>
+</div>
