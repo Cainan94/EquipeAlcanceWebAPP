@@ -1,0 +1,49 @@
+name: Deploy DEV Web App InfinityGroup
+
+on: 
+    push: 
+        branches: [dev]
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout Code
+              uses: actions/Checkout@v3
+
+            - name: Setup NODE
+              uses: actions/setup-node@v3
+              with:
+                node-version: 18
+
+            - name: Install Dependencias
+              run: npm i
+
+            - name: Install Express
+              run: npm i -D express
+              
+            - name: Build Project
+              run: npm rum build -c production
+
+    #         - name: Login Docker Hub
+    #           run: docker login -u ${{secrets.DOCKER_USER}} -p ${{secrets.DOCKER_PASSWORD}}
+
+    #         - name: Build docker image
+    #           run: docker build -t cbtsoftware/deploy_infinity_web_app .
+
+    #         - name: Push Docker Image
+    #           run: docker push cbtsoftware/deploy_infinity_web_app
+    
+    # deploy:
+    #     needs: build
+    #     runs-on: infinity-web-app
+    #     steps:
+    #       - name: Pull Image from Docker Hub
+    #         run: docker pull cbtsoftware/deploy_infinity_web_app:latest
+    #       - name: Delete old container
+    #         run: docker rm -f deploy_infinity_web_app     
+    #       - name: run docker container
+    #         run: docker run -d -p 80:80 --name deploy_infinity_web_app cbtsoftware/deploy_infinity_web_app
+
+               
+            
