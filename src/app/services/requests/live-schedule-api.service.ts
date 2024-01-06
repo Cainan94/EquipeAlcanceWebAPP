@@ -67,6 +67,10 @@ export class LiveScheduleAPIService {
     return this.http.get<LiveSchedulesDTOResponse>(this.baseURL + '/getLastScheduleUser/' + GlobalService.user.streamersDTOResponse.id, { headers: this.getHeaderAuthentication() })
   }
 
+  public AllScheduleOfDay(daySchedule:number){
+    return this.http.get<LiveSchedulesDTOResponse[]>(this.baseURL + '/AllScheduleOfDay/'+daySchedule + GlobalService.user.streamersDTOResponse.id, { headers: this.getHeaderAuthentication() })
+  }
+
   private getHeaderAuthentication(): HttpHeaders {
     return new HttpHeaders({
       'Content-Type': 'application/json',

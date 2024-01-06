@@ -8,7 +8,7 @@
       <button mat-button (click)="goToStreamers()" *ngIf="UserIsADM()">Streamers</button>
       <button mat-button (click)="goToPontuacao()" *ngIf="UserIsADM()">Pontuação</button>
       <button mat-button (click)="goToAgendamentos()" *ngIf="UserIsADM()">Agendamento</button>
-      <button mat-button (click)="goToWatchStreamer()">Assistir Streamer</button>
+      <button mat-button (click)="goToWatchStreamer()" *ngIf="UserIsADM()" >Assistir Streamer</button>
       <button mat-button (click)="goToPontuacao()" *ngIf="!UserIsADM()">Minha pontuação</button>
     </div>
 

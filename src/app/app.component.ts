@@ -3,6 +3,7 @@ import { GlobalService } from './global.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MessageBoxCustomMessageComponent } from './dialogs/message-box-custom-message/message-box-custom-message.component';
+import { WhatchStreamComponent } from './pages/private/whatch-stream/whatch-stream.component';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +15,8 @@ export class AppComponent {
 
   constructor(
     public router: Router,
-    public dialog: MatDialog,) { }
+    public dialog: MatDialog,
+    ) { }
 
   UserIsADM() {
     return GlobalService.userLoggedIsADM()
@@ -36,12 +38,11 @@ export class AppComponent {
     this.router.navigate(['agendamento']);
   }
   goToWatchStreamer() {
-    this.dialog.open(MessageBoxCustomMessageComponent, {
-      data: { message: "Opa, essa é uma feature futura. Aguarde que avisaremos quando lançar" },
-      width: "50%",
-      height: "15%"
-    })
-        
+
+    const dialogRef = this.dialog.open(WhatchStreamComponent, {
+      height: '100%',
+      width: '100%'
+    });
     // let newWindow = window.open('https://www.twitch.tv/abunho', 'com_MyDomain_myWindowForThisPurpose', 'height=960px,width=940px');
     // setInterval(() => {
     //   console.log("chegou a hora de trocar");

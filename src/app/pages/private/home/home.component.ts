@@ -26,13 +26,6 @@ export class HomeComponent {
     }
 
     this.getLastLive();
-    const embed = new TwitchEmbed('twitch-player', {
-      width: 1280,
-      height: 720,
-      channel: 'magames01',
-      layout: TwitchEmbedLayout.VIDEO_WITH_CHAT
-    });
-    embed.getPlayer();
   }
   async getLastLive() {
     await this.lsService.getLastScheduleUser().subscribe(result=>{

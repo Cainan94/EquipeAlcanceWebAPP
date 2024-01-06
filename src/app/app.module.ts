@@ -52,6 +52,7 @@ import { AddScheduleComponent } from './pages/private/live-schedule/dialogs/add-
 import { EditScheduleComponent } from './pages/private/live-schedule/dialogs/edit-schedule/edit-schedule.component';
 import { PontuacaoComponent } from './pages/private/pontuacao/pontuacao.component';
 import { EquipeAlcancePortfoliaComponent } from './pages/public/equipe-alcance-portfolia/equipe-alcance-portfolia.component';
+import { WhatchStreamComponent } from './pages/private/whatch-stream/whatch-stream.component';
 
 
 export const MY_DATE_FORMAT = {
@@ -82,6 +83,7 @@ export const MY_DATE_FORMAT = {
     EditScheduleComponent,
     PontuacaoComponent,
     EquipeAlcancePortfoliaComponent,
+    WhatchStreamComponent,
   ],
   imports: [
     MatNativeDateModule,

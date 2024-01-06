@@ -51,6 +51,11 @@ export class LiveScheduleService {
     return this.api.getAvailableHours(daySchedule);
   }
 
+  public AllScheduleOfDay() {
+    let daySchedule = new Date().getTime();
+    return this.api.AllScheduleOfDay(daySchedule);
+  }
+
   public getLastScheduleUser() {
     return this.api.getLastScheduleUser();
   }

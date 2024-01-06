@@ -13,7 +13,8 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'streamers', component: StreamersComponent },
   { path: 'agendamento', component: LiveScheduleComponent },
-  { path: 'pontuacoes', component: PontuacaoComponent }
+  { path: 'pontuacoes', component: PontuacaoComponent },
+  
 ];
 
 @NgModule({

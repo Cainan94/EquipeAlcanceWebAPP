@@ -137,7 +137,7 @@ export class EditScheduleComponent {
         startTimeSchedule.setHours(Number.parseInt(this.timeSelected.value.split(':')[0]), Number.parseInt(this.timeSelected.value.split(':')[1]), 0, 0)
         let endTimeSchedule: Date = new Date(startTimeSchedule.getTime())
 
-        endTimeSchedule.setHours(startTimeSchedule.getHours() + 1, startTimeSchedule.getMinutes() + 29, 59, 0);
+        endTimeSchedule.setHours(startTimeSchedule.getHours() + 1, startTimeSchedule.getMinutes(), 59, 0);
 
 
         lsReq.deleted = schedule.deleted;

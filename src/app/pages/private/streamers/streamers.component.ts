@@ -131,10 +131,10 @@ export class StreamersComponent {
   }
 
   openDialogAdd(): void {
-    const dialogRef = this.dialog.open(AddNewStreamComponent, {
-      height: '55%',
-      width: '60%'
-    });
+      const dialogRef = this.dialog.open(AddNewStreamComponent, {
+        height: '55%',
+        width: '60%'
+      });
     dialogRef.afterClosed().subscribe(result => {
       this.doDataSource(); this.resetSelects()
     })
