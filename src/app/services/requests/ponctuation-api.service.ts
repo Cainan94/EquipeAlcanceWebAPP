@@ -4,20 +4,19 @@ import { PonctuactionDTOResponse } from 'src/app/models/Ponctuation/PonctuationD
 import { GlobalService } from 'src/app/global.service';
 import { environment } from 'src/environments/environment.dev';
 import { PonctuationDTOTable } from 'src/app/models/Ponctuation/PonctuationDTOTable';
+import { PonctuationDTORequest } from 'src/app/models/Ponctuation/PonctuationDTORequest';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PonctuationApiService {
 
-  private baseURL = environment.base_api_url+"/ponctuation"
+  private baseURL = environment.base_api_url + "/ponctuation"
   constructor(private http: HttpClient) { }
 
-  public getAllPonctuationByPeriod(start:number,end:number){
-    return this.http.get<PonctuationDTOTable[]>(this.baseURL+"/getAllPonctuationByPeriod/"+start+"/"+end,{headers:this.getHeaderAuthentication()})
-  }
-  public getAllPonctuationByPeriodAndUser(start:number,end:number){
-    return this.http.get<PonctuationDTOTable[]>(this.baseURL+"/getAllPonctuationByPeriodAndUser/"+start+"/"+end+"/"+GlobalService.user.streamersDTOResponse.id,{headers:this.getHeaderAuthentication()})
+  sendPonctuation(request: PonctuationDTORequest) {
+    let url = this.baseURL + "/registerPonctuation";
+    return this.http.post<PonctuactionDTOResponse>(url,request,{headers:this.getHeaderAuthentication()})
   }
 
   private getHeaderAuthentication(): HttpHeaders {

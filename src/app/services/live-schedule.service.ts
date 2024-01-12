@@ -60,4 +60,12 @@ export class LiveScheduleService {
     return this.api.getLastScheduleUser();
   }
 
+  public getAllPonctuationByPeriod(start:number, end:number){
+    return this.api.getAllPonctuationByPeriod(start,end);
+  }
+  
+  public getAllPonctuationByPeriodAndUser(start:number, end:number){
+    return this.api.getAllPonctuationByPeriodAndUser(start,end);
+  }
+
 }

@@ -1,8 +1,12 @@
-import { Component } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { response } from 'express';
+import { MessageBoxCustomMessageComponent } from 'src/app/dialogs/message-box-custom-message/message-box-custom-message.component';
 import { LiveSchedulesDTOResponse } from 'src/app/models/LiveSchedules/LiveSchedulesDTOResponse';
 import { StreamersDTOResponse } from 'src/app/models/Streamers/StreamersDTOResponse';
 import { LiveScheduleService } from 'src/app/services/live-schedule.service';
+import { PonctuationService } from 'src/app/services/ponctuation.service';
+import { TwitchAPIServiceService } from 'src/app/services/twitch-apiservice.service';
 import { TwitchEmbed, TwitchEmbedLayout } from 'twitch-player';
 
 @Component({
@@ -11,58 +15,73 @@ import { TwitchEmbed, TwitchEmbedLayout } from 'twitch-player';
   styleUrls: ['./whatch-stream.component.scss']
 })
 export class WhatchStreamComponent {
-
+  streamer: string = 'equipealcance';
   listSchedules = new Array<LiveSchedulesDTOResponse>();
   currentStreamer = new StreamersDTOResponse();
-  ngOnInit(): void {
-    const twitchEmbed = new TwitchEmbed('twitch-player', {
-      width: '100%',
-      height: '90%',
-      channel: 'equipealcance',
-      layout: TwitchEmbedLayout.VIDEO_WITH_CHAT
-    });
-    twitchEmbed.getPlayer();
-    this.getSchedules();
-  }
-
+  pontuacao =0;
+  stopInterval = false
 
   constructor(
     public dialogRef: MatDialogRef<WhatchStreamComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: string,
     public dialog: MatDialog,
-    private lsService: LiveScheduleService,
-    ) {}
+    private twitchService: TwitchAPIServiceService,
+    private pontuacaoService:PonctuationService,
+  ) { this.streamer = data }
 
-    private openTwitch(channel:string){
-
-    }
-
-    async getSchedules() {
-      await this.lsService.AllScheduleOfDay().subscribe(result=>{
-        console.log(result);
-        this.listSchedules = result; 
-        this.configAgenda();       
-      });
-    }
-  configAgenda() {
-    let epochNow = new Date().getTime();
-    console.log(epochNow);
+  ngOnInit(): void {
+    const lurk = new TwitchEmbed('playerLurk', {
+      width: '100%',
+      height: '100%',
+      channel: this.streamer,
+      layout: TwitchEmbedLayout.VIDEO_WITH_CHAT
+    });
     
-    let reserva = new StreamersDTOResponse();
-    reserva.twitchName = "equipealcance";
-     this.currentStreamer = reserva;
-    if(this.listSchedules == null || this.listSchedules.length < 1){
-       this.currentStreamer = reserva;
-    } else{
-      this.listSchedules.forEach(schedule=>{
-        if(epochNow >= schedule.startTime && epochNow <= schedule.endTime){
-          this.currentStreamer = schedule.streamersDTOResponse;
+
+    const dev = new TwitchEmbed('playerDev', {
+      width: '100%',
+      height: '100%',
+      channel: "cainanbt",
+      layout: TwitchEmbedLayout.VIDEO_WITH_CHAT
+    });
+
+    const interval = setInterval(async () => {
+      if (this.stopInterval) {
+        clearInterval(interval)
+      }
+        if(await this.checkSreamerLurkOnline(lurk.getChannel())){
+            this.pontuacao = this.pontuacao+1;
         }
-      });
-    }
-    this.setStreamer();
+        if(this.pontuacao%10==0){
+          this.pontuacaoService.sendPonctuation(this.pontuacao).subscribe(response=>{
+            if(response.id!=null && response.id.trim().length>0){
+              console.log("Pontuou");
+              
+            }
+          }, error => {
+            this.openDialogCustomMessage(error.error.detailedMessage, "50%", "15%")
+          });
+        }
+    }, 60000)
   }
-  setStreamer(){
-      this.openTwitch(this.currentStreamer.twitchName);
+
+  ngOnDestroy() {
+   this.stopInterval= true
+  }
+
+  async checkSreamerLurkOnline(showingChannel?:string) {
+    if(await this.twitchService.StreamIsOnlineAsync(this.data) &&showingChannel!=null && showingChannel.trim().length>0 && await this.twitchService.checkCurrentStreamAsync(showingChannel,this.data)){
+      return true;
+    }
+  return true;
+  }
+
+  openDialogCustomMessage(message: string, width: string, height: string): void {
+    this.dialog.open(MessageBoxCustomMessageComponent, {
+      data: { message: message },
+      width: width,
+      height: height
+    });
   }
 }
 

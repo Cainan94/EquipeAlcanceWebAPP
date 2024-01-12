@@ -5,6 +5,9 @@ import { PonctuationService } from 'src/app/services/ponctuation.service';
 import { PonctuationDTOTable } from 'src/app/models/Ponctuation/PonctuationDTOTable';
 import { Router } from '@angular/router';
 import { GlobalService } from 'src/app/global.service';
+import { LiveScheduleService } from 'src/app/services/live-schedule.service';
+import { MessageBoxCustomMessageComponent } from 'src/app/dialogs/message-box-custom-message/message-box-custom-message.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-pontuacao',
@@ -20,9 +23,11 @@ export class PontuacaoComponent {
   isprocess: boolean = false;
 
   constructor(
-    private ponctuationService: PonctuationService,
+    private lsService: LiveScheduleService,
     private fb: FormBuilder,
-    private route: Router,) {
+    private route: Router,
+    public dialog: MatDialog,
+    ) {
     if (GlobalService.user == undefined || GlobalService.user.username.trim().length < 1) {
       this.route.navigate([''])
     }
@@ -63,10 +68,12 @@ export class PontuacaoComponent {
     endDate.setHours(23, 59, 59, 999)
     this.listPonctuation = [];
     this.isprocess = true;
-    await this.ponctuationService.getAllPonctuationByPeriodAndUser(startDate.getTime(), endDate.getTime()).subscribe(result => {
+    await this.lsService.getAllPonctuationByPeriodAndUser(startDate.getTime(), endDate.getTime()).subscribe(result => {
       this.listTable = result;
       this.isprocess = false;
-    })
+    },error=>{
+      this.openDialogCustomMessage(error.error.detailedMessage,"50%","15%")
+    });
   }
 
   userIsADM() {
@@ -83,9 +90,18 @@ export class PontuacaoComponent {
 
     this.listPonctuation = [];
     this.isprocess = true;
-    await this.ponctuationService.getAllPonctuationByPeriod(startDate.getTime(), endDate.getTime()).subscribe(result => {
+    await this.lsService.getAllPonctuationByPeriod(startDate.getTime(), endDate.getTime()).subscribe(result => {
       this.listTable = result;
       this.isprocess = false;
-    })
+    },error=>{
+      this.openDialogCustomMessage(error.error.detailedMessage,"50%","15%")
+    });
+  }
+  openDialogCustomMessage(message: string, width: string, height: string): void {
+    this.dialog.open(MessageBoxCustomMessageComponent, {
+      data: { message: message },
+      width: width,
+      height: height
+    });
   }
 }

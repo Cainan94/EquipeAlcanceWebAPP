@@ -9,6 +9,7 @@ import { AddScheduleComponent } from './dialogs/add-schedule/add-schedule.compon
 import { EditScheduleComponent } from './dialogs/edit-schedule/edit-schedule.component';
 import { GlobalService } from '../../../global.service';
 import { LiveScheduleTable } from 'src/app/models/LiveSchedules/LiveScheduleTable';
+import { MessageBoxCustomMessageComponent } from 'src/app/dialogs/message-box-custom-message/message-box-custom-message.component';
 
 @Component({
   selector: 'app-live-schedule',
@@ -50,7 +51,9 @@ export class LiveScheduleComponent {
     await this.lsService.getAllAgendamentosActive(startDate.getTime(), endDate.getTime()).subscribe(agendamentoResponse => {
       this.listSchedules = agendamentoResponse;
       this.isprocess = false;
-    })
+    },error=>{
+      this.openDialogCustomMessage(error.error.detailedMessage,"50%","15%")
+    });
   }
 
   configureComponents() {
@@ -89,5 +92,13 @@ export class LiveScheduleComponent {
     dialogRef.afterClosed().subscribe(result => {
       this.changeDate();
     })
+  }
+
+  openDialogCustomMessage(message: string, width: string, height: string): void {
+    this.dialog.open(MessageBoxCustomMessageComponent, {
+      data: { message: message },
+      width: width,
+      height: height
+    });
   }
 }

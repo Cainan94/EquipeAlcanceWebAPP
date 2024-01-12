@@ -6,11 +6,14 @@ import { StreamersComponent } from './pages/private/streamers/streamers.componen
 import { LiveScheduleComponent } from './pages/private/live-schedule/live-schedule.component';
 import { PontuacaoComponent } from './pages/private/pontuacao/pontuacao.component';
 import { EquipeAlcancePortfoliaComponent } from './pages/public/equipe-alcance-portfolia/equipe-alcance-portfolia.component';
+import { SideMenuComponent } from './pages/private/side-menu/side-menu.component';
+import { SideMenuPublicComponent } from './pages/public/side-menu-public/side-menu-public.component';
 
 const routes: Routes = [
-  { path: '', component: EquipeAlcancePortfoliaComponent },
+  { path: '', component: SideMenuPublicComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'home', component: HomeComponent },
+  { path: 'home', component: SideMenuComponent },
+  { path: 'dashboard', component: HomeComponent },
   { path: 'streamers', component: StreamersComponent },
   { path: 'agendamento', component: LiveScheduleComponent },
   { path: 'pontuacoes', component: PontuacaoComponent },

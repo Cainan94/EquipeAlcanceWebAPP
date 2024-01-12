@@ -62,7 +62,9 @@ export class AddNewStreamComponent {
               if (response) {
                 this.insertADMUser();
               }
-            })
+            }, error => {
+              this.openDialogCustomMessage(error.error.detailedMessage, "50%", "15%")
+            });
           } else {
             this.insertNotADMUser();
           }
@@ -111,7 +113,9 @@ export class AddNewStreamComponent {
           height: "15%"
         })
       }
-    })
+    }, error => {
+      this.openDialogCustomMessage(error.error.detailedMessage, "50%", "15%")
+    });
   }
   menorIdade() {
     return UtilsService.getIdade(new Date(this.dataNascimento)) < 18
@@ -129,5 +133,13 @@ export class AddNewStreamComponent {
   
   cancelarAdd() {
     this.dialogRef.close();
+  }
+
+  openDialogCustomMessage(message: string, width: string, height: string): void {
+    this.dialog.open(MessageBoxCustomMessageComponent, {
+      data: { message: message },
+      width: width,
+      height: height
+    });
   }
 }

@@ -5,6 +5,7 @@ import { AvailableHours } from 'src/app/models/LiveSchedules/AvailableHours';
 import { LiveScheduleTable } from 'src/app/models/LiveSchedules/LiveScheduleTable';
 import { LiveSchedulesDTORequest } from 'src/app/models/LiveSchedules/LiveSchedulesDTORequest';
 import { LiveSchedulesDTOResponse } from 'src/app/models/LiveSchedules/LiveSchedulesDTOResponse';
+import { PonctuationDTOTable } from 'src/app/models/Ponctuation/PonctuationDTOTable';
 import { StreamersDTOResponse } from 'src/app/models/Streamers/StreamersDTOResponse';
 import { environment } from 'src/environments/environment.dev';
 
@@ -68,7 +69,15 @@ export class LiveScheduleAPIService {
   }
 
   public AllScheduleOfDay(daySchedule:number){
-    return this.http.get<LiveSchedulesDTOResponse[]>(this.baseURL + '/AllScheduleOfDay/'+daySchedule + GlobalService.user.streamersDTOResponse.id, { headers: this.getHeaderAuthentication() })
+    return this.http.get<LiveSchedulesDTOResponse[]>(this.baseURL + '/AllScheduleOfDay/'+daySchedule, { headers: this.getHeaderAuthentication() })
+  }
+
+  public getAllPonctuationByPeriod(start:number,end:number){
+    return this.http.get<PonctuationDTOTable[]>(this.baseURL+"/getAllPonctuationByPeriod/"+start+"/"+end,{headers:this.getHeaderAuthentication()})
+  }
+
+  public getAllPonctuationByPeriodAndUser(start:number,end:number){
+    return this.http.get<PonctuationDTOTable[]>(this.baseURL+"/getAllPonctuationByPeriodAndUser/"+start+"/"+end+"/"+GlobalService.user.streamersDTOResponse.id,{headers:this.getHeaderAuthentication()})
   }
 
   private getHeaderAuthentication(): HttpHeaders {

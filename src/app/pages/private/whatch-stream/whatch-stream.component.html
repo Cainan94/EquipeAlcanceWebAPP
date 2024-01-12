@@ -1,5 +1,10 @@
 <div class="mainContainer">
-    <div id="twitch-player"></div>
-    <button mat-raised-button (click)="this.dialogRef.close();"
-        style="width: 25%; height: 40px; margin-left: 3%; margin-right: 44%; margin: 4%;">fechar</button>
+    <div class="containerPlayerLurk">
+        <h1>Você esta assistindo: {{data}}</h1>
+        <div class="twitchPlayer1" id="playerLurk"></div>
+    </div>
+    <div class="containerPlayerDev">
+        <h2>Live do desenvolvedor</h2>
+        <div class="twitchPlayer2" id="playerDev"></div>
+    </div>
 </div>

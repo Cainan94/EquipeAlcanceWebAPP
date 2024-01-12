@@ -36,18 +36,19 @@ export class LoginComponent {
 
   login() {
     if (this.loginForm.valid) {
-      this.userService.login(this.loginForm.get('username')?.value, this.loginForm.get('password')?.value).subscribe(
-        res => this.finishLogin(res),
-        err => this.openDialogError(err.error.detailedMessage,'15%','30%')
-      )
+      this.userService.login(this.loginForm.get('username')?.value, this.loginForm.get('password')?.value).subscribe(res=>{
+       this.finishLogin(res); 
+      }, error => {
+        this.openDialogCustomMessage(error.error.detailedMessage, "50%", "15%")
+      });
     }
   }
-  openDialogError(message: string, height: string, width: string): void {
+  openDialogCustomMessage(message: string, width: string, height: string): void {
     this.dialog.open(MessageBoxCustomMessageComponent, {
       data: { message: message },
-      height: height,
-      width: width
-    })
+      width: width,
+      height: height
+    });
   }
 
   finishLogin(user:UserDTOResponse): void {
