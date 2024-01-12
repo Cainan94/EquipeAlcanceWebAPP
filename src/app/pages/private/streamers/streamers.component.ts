@@ -54,9 +54,11 @@ export class StreamersComponent {
   }
   async doDataSource() {
     this.isprocess = true;
-    await this.service.getAllStreamersAtivos().subscribe(
-      res => this.feedTable(res)
-    );
+    await this.service.getAllStreamersAtivos().subscribe(res => {
+      this.feedTable(res);
+    }, error => {
+      this.openDialogCustomMessage(error.error.detailedMessage, "50%", "15%")
+    });
   }
 
   feedTable(res: StreamersDTOResponse[]): void {
@@ -131,10 +133,10 @@ export class StreamersComponent {
   }
 
   openDialogAdd(): void {
-      const dialogRef = this.dialog.open(AddNewStreamComponent, {
-        height: '55%',
-        width: '60%'
-      });
+    const dialogRef = this.dialog.open(AddNewStreamComponent, {
+      height: '55%',
+      width: '60%'
+    });
     dialogRef.afterClosed().subscribe(result => {
       this.doDataSource(); this.resetSelects()
     })
@@ -164,13 +166,13 @@ export class StreamersComponent {
     this.openDialogAdd();
   }
 
-  openDialogCustomMessage(message: string, width: string, height: string): void {
-    this.dialog.open(MessageBoxCustomMessageComponent, {
-      data: { message: message },
-      width: width,
-      height: height
-    });
-  }
+    openDialogCustomMessage(message: string, width: string, height: string): void {
+      this.dialog.open(MessageBoxCustomMessageComponent, {
+        data: { message: message },
+        width: width,
+        height: height
+      });
+    }
 
   questionDelete(message: string, width: string, height: string): void {
     const dialogRef = this.dialog.open(MessageQuestionAlertDialogComponent, {
@@ -181,27 +183,27 @@ export class StreamersComponent {
     let indexDelet = 0
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        this.isprocess = true;
         this.itensSelecteds.forEach(item => {
-          this.userService.getByUsername(item.nome).subscribe(
-            ret => {
-              let userResponse = new UserDTORequest()
-              userResponse.id = ret.id;
-              this.userService.delete(userResponse).subscribe(
-                ret => {                  
-                  indexDelet++;
-                  if(indexDelet >= this.itensSelecteds.length){
-                    this.openDialogCustomMessage("Usuário deletado com sucesso", "40%", "15%"); 
-                    this.doDataSource(); 
-                    this.resetSelects()
-                  }
-                },
-                err => console.log(err)
-              )
-            },
-            err => console.log(err)
-          )
+          this.userService.getByUsername(item.nome).subscribe(result => {
+            let userResponse = new UserDTORequest()
+            userResponse.id = result.id;
+            this.userService.delete(userResponse).subscribe(resultDelete => {
+              indexDelet++;
+              if (indexDelet >= this.itensSelecteds.length) {
+                this.openDialogCustomMessage("Usuário deletado com sucesso", "40%", "15%");
+                this.doDataSource();
+                this.resetSelects()
+              }
+            }, error => {
+              this.openDialogCustomMessage(error.error.detailedMessage, "50%", "15%")
+            });
+          }, error => {
+            this.openDialogCustomMessage(error.error.detailedMessage, "50%", "15%")
+          });
         })
       }
+      this.isprocess = false;
     })
   }
 
@@ -231,6 +233,8 @@ export class StreamersComponent {
 
   editStreamer() {
     this.questionEdit("Tem certeza que deseja Editar o streamer? " + this.itensSelecteds[0].nome + "?", "60%", "15%")
+    console.log(this.itensSelecteds[0]);
+    
   }
 
   deleteStream() {

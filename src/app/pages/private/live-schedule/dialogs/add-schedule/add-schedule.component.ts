@@ -87,7 +87,9 @@ export class AddScheduleComponent {
   async initListOfTime() {
     await this.lsService.getAvailableHours(this.scheduleDay.getTime()).subscribe(result => {
       this.listOfAvailableSchedules = result;
-    })
+    },error=>{
+      this.openDialogCustomMessage(error.error.detailedMessage,"50%","15%")
+    });
   }
 
   async AddScheduleNotADM() {    

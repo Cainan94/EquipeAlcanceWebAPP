@@ -55,7 +55,9 @@ export class EditStreamerComponent {
         }
         this.userResponse = result;
       }
-    })
+    }, error => {
+      this.openDialogCustomMessage(error.error.detailedMessage, "50%", "15%")
+    });
   }
 
   selectDate(event: any) {
@@ -113,7 +115,9 @@ export class EditStreamerComponent {
               if (response) {
                 this.updateADMUser();
               }
-            })
+            }, error => {
+              this.openDialogCustomMessage(error.error.detailedMessage, "50%", "15%")
+            });
           } else {
             this.updateNotADMUser();
           }
@@ -183,14 +187,6 @@ export class EditStreamerComponent {
     strRequest.visible = this.userResponse.streamersDTOResponse.visible;
 
     request.streamersRequestDTO = strRequest;
-
-    console.log("admin");
-
-    console.log(this.username);
-    console.log(this.isAdm);
-    console.log(new Date(this.dataNascimento));
-    console.log(request);
-
     this.sendUpdate(request);
   }
 
@@ -213,7 +209,9 @@ export class EditStreamerComponent {
         })
 
       }
-    })
+    }, error => {
+      this.openDialogCustomMessage(error.error.detailedMessage, "50%", "15%")
+    });
   }
 
   menorIdade(): boolean {
@@ -222,6 +220,14 @@ export class EditStreamerComponent {
 
   closeEdit() {
     this.dialogRef.close();
+  }
+
+  openDialogCustomMessage(message: string, width: string, height: string): void {
+    this.dialog.open(MessageBoxCustomMessageComponent, {
+      data: { message: message },
+      width: width,
+      height: height
+    });
   }
 }
 

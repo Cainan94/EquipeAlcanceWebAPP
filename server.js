@@ -18,6 +18,9 @@ app.use(allowCors);
 app.use(bodyParser.json({ limit: '10mb' }));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(__dirname + "/dist/equipe-alcance-web-app"));
+app.get('/', function (req, res) {
+  res.render('index', {});
+});
 
 app.get('*', (req, res) => {
     res.sendFile(__dirname + "/dist/equipe-alcance-web-app");

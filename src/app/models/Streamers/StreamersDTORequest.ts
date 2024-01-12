@@ -1,3 +1,5 @@
+import { StreamersDTOResponse } from "./StreamersDTOResponse";
+
 export class StreamersDTORequest {
     public id: string = ""
     public visible: boolean = true;
@@ -8,5 +10,14 @@ export class StreamersDTORequest {
         let ret = new StreamersDTORequest()
         ret.twitchName = twitchName;
         return ret;
+    }
+
+    static toDTO(response: StreamersDTOResponse) {
+        let result = new StreamersDTORequest();
+        result.birthday = response.birthday
+        result.id = response.id
+        result.twitchName = response.twitchName
+        result.visible = response.visible
+        return result;
     }
 }

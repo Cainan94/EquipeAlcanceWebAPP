@@ -53,6 +53,9 @@ import { EditScheduleComponent } from './pages/private/live-schedule/dialogs/edi
 import { PontuacaoComponent } from './pages/private/pontuacao/pontuacao.component';
 import { EquipeAlcancePortfoliaComponent } from './pages/public/equipe-alcance-portfolia/equipe-alcance-portfolia.component';
 import { WhatchStreamComponent } from './pages/private/whatch-stream/whatch-stream.component';
+import { SideMenuComponent } from './pages/private/side-menu/side-menu.component';
+import { SideMenuPublicComponent } from './pages/public/side-menu-public/side-menu-public.component';
+import { PrepareTowatchComponent } from './pages/private/prepare-towatch/prepare-towatch.component';
 
 
 export const MY_DATE_FORMAT = {
@@ -84,6 +87,9 @@ export const MY_DATE_FORMAT = {
     PontuacaoComponent,
     EquipeAlcancePortfoliaComponent,
     WhatchStreamComponent,
+    SideMenuComponent,
+    SideMenuPublicComponent,
+    PrepareTowatchComponent,
   ],
   imports: [
     MatNativeDateModule,

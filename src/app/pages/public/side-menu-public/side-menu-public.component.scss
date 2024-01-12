@@ -1,0 +1,25 @@
+mat-toolbar{
+    background-color: black;
+    color: white;
+    .title{
+        text-align: center; 
+        width: 100%;
+    }
+}
+.app-container {
+    height: 90%;
+    margin: 0;
+}  
+.app-sidenav {
+    width: 230px;
+}
+.app-sidenav-content {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+} 
+mat-sidenav-content{
+    width: 100%;
+    height: 100%;
+}

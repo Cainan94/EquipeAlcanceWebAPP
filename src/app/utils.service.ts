@@ -62,4 +62,14 @@ export class UtilsService {
     }
   }
   
+  static convertToTimeZoneSP(timestamp:number){
+    return new Date(timestamp).toLocaleDateString('pt-BR',{timeZone:'America/Sao_Paulo'})
+  }
+
+  static getDateTimeZoneSP(){
+    return new Date().toLocaleDateString('pt-BR',{timeZone:'America/Sao_Paulo'})
+  }
+  static getTimeTimeZoneSP(){
+    return new Date().toLocaleTimeString('pt-BR',{timeZone:'America/Sao_Paulo'})
+  }
 }

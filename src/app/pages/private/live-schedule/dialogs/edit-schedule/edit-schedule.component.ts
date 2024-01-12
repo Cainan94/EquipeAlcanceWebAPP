@@ -55,7 +55,9 @@ export class EditScheduleComponent {
         this.schedules = responseSchedules;
         await  this.lsService.getAllAgendamentosActive(startDay.getTime(), endDay.getTime()).subscribe(agendamentoResponse=>{
           this.Agendamentos = agendamentoResponse;
-        })
+        },error=>{
+          this.openDialogCustomMessage(error.error.detailedMessage,"50%","15%")
+        });
       }
       this.lsService.getAllStreamerAgendado(this.scheduleDay.getTime()).subscribe(responseStreamers => {
 
@@ -64,15 +66,21 @@ export class EditScheduleComponent {
             this.streamers = responseStreamers;
           }
         }
+      },error=>{
+        this.openDialogCustomMessage(error.error.detailedMessage,"50%","15%")
       });
       this.initListOfTime();
+    },error=>{
+      this.openDialogCustomMessage(error.error.detailedMessage,"50%","15%")
     });
   }
 
   async initListOfTime() {
     await this.lsService.getAvailableHours(this.scheduleDay.getTime()).subscribe(result => {
       this.listOfAvailableSchedules = result;
-    })
+    },error=>{
+      this.openDialogCustomMessage(error.error.detailedMessage,"50%","15%")
+    });
   }
 
   trocarHorario() {
@@ -111,7 +119,9 @@ export class EditScheduleComponent {
             height: "15%",
           })
           dialogRef2.afterClosed().subscribe(ret => this.dialog.closeAll())
-        })
+        },error=>{
+          this.openDialogCustomMessage(error.error.detailedMessage,"50%","15%")
+        });
       }
     })
   }
@@ -156,8 +166,18 @@ export class EditScheduleComponent {
             })
             dialogRef.afterClosed().subscribe(ret => this.dialog.closeAll())
           }
-        })
+        },error=>{
+          this.openDialogCustomMessage(error.error.detailedMessage,"50%","15%")
+        });
       }
     })
+  }
+
+  openDialogCustomMessage(message: string, width: string, height: string): void {
+    this.dialog.open(MessageBoxCustomMessageComponent, {
+      data: { message: message },
+      width: width,
+      height: height
+    });
   }
 }
