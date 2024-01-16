@@ -28,7 +28,7 @@
             <mat-list-item (click)="goToAgendamentos(sidenav)">
                 <mat-icon>schedule</mat-icon><span>Agendamentos</span>
             </mat-list-item>
-            <mat-list-item *ngIf="UserIsADM()" (click)="goToLurkOnline(sidenav)">
+            <mat-list-item (click)="goToLurkOnline(sidenav)">
                 <mat-icon>tv</mat-icon><span>Assistir Streamers</span>
             </mat-list-item>
         </mat-nav-list>
