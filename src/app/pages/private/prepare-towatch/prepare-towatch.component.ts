@@ -19,39 +19,59 @@ export class PrepareTowatchComponent {
   currentStreamer = new StreamersDTOResponse();
   changeStreamer = false;
   lurkOpened = false;
+  pontuacao: number = 0;
+  loading = false;
   constructor(
     private lsService: LiveScheduleService,
-    private twitchService: TwitchAPIServiceService,
     public dialog: MatDialog,
   ) { }
+  
+  ngOnInit() {
+
+    this.getSchedules();
+  }
 
   async startLurk() {
     let dialog = this.dialog.open(WhatchStreamComponent, {
-      data: "equipealcance",
+      data: this.currentStreamer.twitchName,
       height: '90%',
       width: '90%'
     });
     dialog.afterOpened().subscribe(()=>this.lurkOpened = true)
 
     this.stopLurk = false;
-    console.log(UtilsService.getDateTimeZoneSP() + " - " + UtilsService.getTimeTimeZoneSP());
-    await this.getSchedules();
-    await this.getCurrentStreamer();
-    if (this.currentStreamer.twitchName != null && this.currentStreamer.twitchName.length > 0) {
+    if (this.currentStreamer.twitchName != null && this.currentStreamer.twitchName.trim().length > 0) {
       this.openLurk(dialog);
     }
+
     const intervalID = setInterval(async () => {
       if (this.stopLurk) {
         clearInterval(intervalID)
+        this.lurkOpened = false;
       }
       let auxStreamer = this.currentStreamer.twitchName;
       await this.getCurrentStreamer();
-      if(auxStreamer!=this.currentStreamer.twitchName){
+      this.getPontuacao();
+      if (auxStreamer != this.currentStreamer.twitchName) {
         this.openLurk(dialog);
       }
-
     }, 60000)
   }
+
+  getPontuacao() {
+
+    let startDate = new Date();
+
+    let endDate = new Date(new Date().setHours(23, 59, 59));
+    this.lsService.getAllPonctuationByPeriodAndUser(startDate.getTime(), endDate.getTime()).subscribe(result => {
+      if(result.length!=null && result.length>0){
+        if(result[0].pontuacaoes.length!=null && result[0].pontuacaoes.length>0){
+          this.pontuacao = result[0].pontuacaoes[0].score
+        }
+      }
+    })
+  }
+  
   openLurk(dialog: MatDialogRef<WhatchStreamComponent, any>) {
     if(this.lurkOpened == true){
       dialog.close();
@@ -69,8 +89,11 @@ export class PrepareTowatchComponent {
   
 
   async getSchedules() {
-    await this.lsService.AllScheduleOfDay().subscribe(res => {
+    this.loading = true;
+    await this.lsService.AllScheduleOfDay().subscribe(async res => {
       this.schedules = res;
+      await this.getCurrentStreamer();
+      this.getPontuacao();
     }, error => {
       this.openDialogCustomMessage(error.error.detailedMessage, "50%", "15%")
     });
@@ -84,6 +107,7 @@ export class PrepareTowatchComponent {
       reserva = new StreamersDTOResponse();
       reserva.twitchName = "equipealcance"
       this.currentStreamer = reserva;
+      this.loading = false;
     } else {
       for (let id = 0; id < this.schedules.length; id++) {
         const element = this.schedules[id];
@@ -91,13 +115,16 @@ export class PrepareTowatchComponent {
           reserva = new StreamersDTOResponse();
           reserva.twitchName = "equipealcance"
           this.currentStreamer = reserva;
-          break;
         } else {
           if (currenttime >= element.startTime && currenttime <= element.endTime) {
             if (this.currentStreamer.twitchName != element.streamersDTOResponse.twitchName) {
               this.changeStreamer = true;
             }
             this.currentStreamer = element.streamersDTOResponse;
+            this.loading = false;
+            console.log("encontrou");
+            console.log(this.currentStreamer);
+            
             break;
           }
         }

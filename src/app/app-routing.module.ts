@@ -11,12 +11,7 @@ import { SideMenuPublicComponent } from './pages/public/side-menu-public/side-me
 
 const routes: Routes = [
   { path: '', component: SideMenuPublicComponent },
-  { path: 'login', component: LoginComponent },
   { path: 'home', component: SideMenuComponent },
-  { path: 'dashboard', component: HomeComponent },
-  { path: 'streamers', component: StreamersComponent },
-  { path: 'agendamento', component: LiveScheduleComponent },
-  { path: 'pontuacoes', component: PontuacaoComponent },
   
 ];
 
