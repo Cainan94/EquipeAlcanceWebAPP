@@ -1,5 +1,11 @@
-.mainContainer{
-    width: 100%;
-    height: 100%;
-    
+.oneRow{
+    flex-direction: row;
+}
+
+.page-loading{
+    position: absolute;
+    top: 40%;
+    right: 40%;
+    width: 50%;
+    height: 50%;
 }

@@ -62,7 +62,7 @@
             <div class="containerDataPicker">
                 <mat-form-field class="dataPicker">
                     <mat-label>Data Agendamento </mat-label>
-                    <input matInput [matDatepicker]="dateStartpicker" name="dataStartAgenda" [disabled]="true"
+                    <input matInput [min]="minDate" [matDatepicker]="dateStartpicker" name="dataStartAgenda" [disabled]="true"
                         (dateInput)="selectDateNotADM($event)">
                     <mat-hint>DD/MM/YYYY</mat-hint>
                     <mat-datepicker-toggle matIconSuffix [for]="dateStartpicker"></mat-datepicker-toggle>

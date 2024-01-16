@@ -1,4 +1,24 @@
-<div class="mainContainer">
-    <button (click)="startLurk()" mat-raised-button color="primary">StartLurk</button>
-    <button (click)="stop()" mat-raised-button color="primary">stopLurk</button>
+<mat-spinner class="page-loading" *ngIf="loading"></mat-spinner>
+<div class="mainContainer" *ngIf="!loading">
+    <mat-card class="cardLurk">
+        <mat-card-header>
+            <mat-card-title>para iniciar o Lurk click em start</mat-card-title>
+            <mat-card-subtitle>Quando for sair porfavor pare o lurk</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <hr>
+                <h3>Minha pontuação do dia: </h3><span>{{pontuacao}}%</span>
+            <hr>
+            <p>Sistema ainda em teste, por favor tenha certeza de apertar em Stop quando for sair, ou fechar o navegador para o funcionamento perfeito.</p>
+            <p>A barra abaixo indica quando o lurk estiver funcionando</p>
+            <p>Ao clickar em Stop o lurk ainda funcionara por mais 1 ciclo (1min) até ser desativado.</p>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-raised-button style="margin-left: 1%; background-color: #002c48; color: white; width: 25%;"  (click)="startLurk()" [disabled]="loading">Start</button>
+            <button mat-raised-button style="margin-left: 60%; width: 25%; " (click)="stop()"[disabled]="loading">Stop</button>
+        </mat-card-actions>
+        <mat-card-footer>
+            <mat-progress-bar mode="indeterminate" *ngIf="lurkOpened"></mat-progress-bar>
+          </mat-card-footer>
+    </mat-card>
 </div>
