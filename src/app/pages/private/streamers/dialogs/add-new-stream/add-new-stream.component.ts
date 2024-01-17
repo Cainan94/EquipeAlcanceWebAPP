@@ -39,6 +39,16 @@ export class AddNewStreamComponent {
 
   }
 
+  initiateComponents() {
+    this.hide = true;
+    this.isAdm = false
+    this.dataNascimento = 0;
+    this.username = ""
+    this.password = ""
+    this.confirPasswd = ""
+    this.currentDate = new Date();
+  }
+
   selectDate(event: any) {
     this.dataNascimento = new Date(event.value._d).getTime();
   }
@@ -104,7 +114,21 @@ export class AddNewStreamComponent {
           width: "50%",
           height: "15%"
         });
-        await dialog.afterClosed().subscribe(() => this.dialogRef.close())
+        await dialog.afterClosed().subscribe(async () => {
+
+          const dialogNewAdd = this.dialog.open(MessageQuestionAlertDialogComponent, {
+            data: { message: "Deseja adicionar um novo Streamer" },
+            width: "50%",
+            height: "15%"
+          });
+          await dialogNewAdd.afterClosed().subscribe(resNewADd => {
+            if (resNewADd) {
+              this.initiateComponents();
+            } else {
+              this.dialogRef.close();
+            }
+          })
+        })
       } else {
         console.log(result);
         this.dialog.open(MessageBoxCustomMessageComponent, {
@@ -130,7 +154,7 @@ export class AddNewStreamComponent {
     }
     return true;
   }
-  
+
   cancelarAdd() {
     this.dialogRef.close();
   }

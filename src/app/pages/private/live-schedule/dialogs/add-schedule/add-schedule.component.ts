@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MessageBoxCustomMessageComponent } from 'src/app/dialogs/message-box-custom-message/message-box-custom-message.component';
+import { MessageQuestionAlertDialogComponent } from 'src/app/dialogs/message-question-alert-dialog/message-question-alert-dialog.component';
 import { GlobalService } from 'src/app/global.service';
 import { AvailableHours } from 'src/app/models/LiveSchedules/AvailableHours';
 import { LiveSchedulesDTORequest } from 'src/app/models/LiveSchedules/LiveSchedulesDTORequest';
@@ -42,6 +43,20 @@ export class AddScheduleComponent {
     if(!this.UserIsADM()){
       this.streamerSelectedNotADM = GlobalService.user.streamersDTOResponse;
     }
+  }
+
+  initiateComponents() {
+    this.minDate = new Date();
+    this.scheduleDay = new Date(0);
+    this.streamers = new Array<StreamersDTOResponse>();
+    this.streamerSelected = new StreamersDTOResponse();
+    this.timeSelected = new AvailableHours();
+    this.listOfAvailableSchedules = new Array<AvailableHours>()
+
+    this.listOfAvailableSchedulesNotADM = new Array<AvailableHours>()
+    this.scheduleDayNotADM = new Date(0);
+    this.streamerSelectedNotADM = new StreamersDTOResponse();
+    this.timeSelectedNotADM = new AvailableHours()
   }
 
   async selectDateNotADM(event: any){
@@ -137,7 +152,21 @@ export class AddScheduleComponent {
           width: "50%",
           height: "15%"
         });
-        await dialogSuc.afterClosed().subscribe(() => this.dialogRef.close());
+        await dialogSuc.afterClosed().subscribe(async () => {
+          
+          const dialogNewAdd = this.dialog.open(MessageQuestionAlertDialogComponent, {
+            data: { message: "Deseja adicionar um novo Agendamento" },
+            width: "50%",
+            height: "15%"
+          });
+          await dialogNewAdd.afterClosed().subscribe(resNewADd => {
+            if (resNewADd) {
+              this.initiateComponents();
+            }else{
+              this.dialogRef.close();
+            }
+          })
+        });
       }
     },error=>{
       this.openDialogCustomMessage(error.error.detailedMessage,"50%","15%")

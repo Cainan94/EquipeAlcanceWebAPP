@@ -67,5 +67,8 @@ export class LiveScheduleService {
   public getAllPonctuationByPeriodAndUser(start:number, end:number){
     return this.api.getAllPonctuationByPeriodAndUser(start,end);
   }
+  public getTopPonctuactionPeriod(start:number, end:number){
+    return this.api.getTopPonctuactionPeriod(start,end);
+  }
 
 }

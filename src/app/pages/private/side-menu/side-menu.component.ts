@@ -20,6 +20,8 @@ export class SideMenuComponent {
   openPontuacoes = false;
   openAgendamentos = false;
   openLurkonline = false;
+  openTopStreamers = false;
+
 
   constructor(private route: Router,) {
     if (GlobalService.user == undefined || GlobalService.user.username.trim().length < 1) {
@@ -85,6 +87,16 @@ export class SideMenuComponent {
     this.openPontuacoes = false;
     this.openAgendamentos = false;
     this.openLurkonline = true;
+    sideNav.toggle()
+  }
+
+  goToTop(sideNav: MatSidenav){
+    this.openDashboard = false;
+    this.openStreamers = false;
+    this.openPontuacoes = false;
+    this.openAgendamentos = false;
+    this.openLurkonline = false;
+    this.openTopStreamers = true;
     sideNav.toggle()
   }
 }

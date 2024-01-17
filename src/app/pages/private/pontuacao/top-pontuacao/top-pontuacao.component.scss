@@ -1,0 +1,32 @@
+.mainContainer {
+    width: 95%;
+    height: 100%;
+
+    .title {
+        margin-top: 2%;
+        margin-left: 2%;
+    }
+
+    .selectRangeDate {
+        margin-top: 2%;
+        margin-left: 2%;
+        align-items: center;
+
+        .rangeDate {
+            margin-left: 2%;
+        }
+    }
+
+    .searchButton {
+        margin-left: 1%;
+        align-items: center;
+        margin-bottom: 1.5%;
+        width: 1%;
+    }
+}
+
+.page-loading{
+    position: absolute;
+    top: 40%;
+    right: 40%;
+}
