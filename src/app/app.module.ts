@@ -56,6 +56,7 @@ import { WhatchStreamComponent } from './pages/private/whatch-stream/whatch-stre
 import { SideMenuComponent } from './pages/private/side-menu/side-menu.component';
 import { SideMenuPublicComponent } from './pages/public/side-menu-public/side-menu-public.component';
 import { PrepareTowatchComponent } from './pages/private/prepare-towatch/prepare-towatch.component';
+import { TopPontuacaoComponent } from './pages/private/pontuacao/top-pontuacao/top-pontuacao.component';
 
 
 export const MY_DATE_FORMAT = {
@@ -90,6 +91,7 @@ export const MY_DATE_FORMAT = {
     SideMenuComponent,
     SideMenuPublicComponent,
     PrepareTowatchComponent,
+    TopPontuacaoComponent,
   ],
   imports: [
     MatNativeDateModule,

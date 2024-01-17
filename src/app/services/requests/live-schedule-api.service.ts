@@ -5,6 +5,7 @@ import { AvailableHours } from 'src/app/models/LiveSchedules/AvailableHours';
 import { LiveScheduleTable } from 'src/app/models/LiveSchedules/LiveScheduleTable';
 import { LiveSchedulesDTORequest } from 'src/app/models/LiveSchedules/LiveSchedulesDTORequest';
 import { LiveSchedulesDTOResponse } from 'src/app/models/LiveSchedules/LiveSchedulesDTOResponse';
+import { PonctuactionDTOResponse } from 'src/app/models/Ponctuation/PonctuationDTOResponse';
 import { PonctuationDTOTable } from 'src/app/models/Ponctuation/PonctuationDTOTable';
 import { StreamersDTOResponse } from 'src/app/models/Streamers/StreamersDTOResponse';
 import { environment } from 'src/environments/environment.dev';
@@ -78,6 +79,10 @@ export class LiveScheduleAPIService {
 
   public getAllPonctuationByPeriodAndUser(start:number,end:number){
     return this.http.get<PonctuationDTOTable[]>(this.baseURL+"/getAllPonctuationByPeriodAndUser/"+start+"/"+end+"/"+GlobalService.user.streamersDTOResponse.id,{headers:this.getHeaderAuthentication()})
+  }
+
+  public getTopPonctuactionPeriod(start: number, end: number) {
+    return this.http.get<PonctuactionDTOResponse[]>(this.baseURL + "/getTopPonctuactionPeriod/" + start + "/" + end, { headers: this.getHeaderAuthentication() })
   }
 
   private getHeaderAuthentication(): HttpHeaders {

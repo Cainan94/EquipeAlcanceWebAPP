@@ -19,19 +19,24 @@
             <mat-list-item (click)="goToHome(sidenav)">
                 <mat-icon>dashboard</mat-icon><span>Dashboard</span>
             </mat-list-item>
-            <mat-list-item (click)="goToStreamers(sidenav)">
+            <mat-list-item *ngIf="UserIsADM()" (click)="goToStreamers(sidenav)">
                 <mat-icon>group</mat-icon><span>Streamers</span>
             </mat-list-item>
-            <mat-list-item (click)="goToPontuacao(sidenav)">
-                <mat-icon>list_alt</mat-icon><span>Pontuacao</span>
+            <mat-list-item [matMenuTriggerFor]="pontuacoes">
+                <mat-icon>expand_more</mat-icon><span>Pontuações</span>
             </mat-list-item>
-            <mat-list-item (click)="goToAgendamentos(sidenav)">
+            <mat-list-item *ngIf="UserIsADM()" (click)="goToAgendamentos(sidenav)">
                 <mat-icon>schedule</mat-icon><span>Agendamentos</span>
             </mat-list-item>
             <mat-list-item (click)="goToLurkOnline(sidenav)">
                 <mat-icon>tv</mat-icon><span>Assistir Streamers</span>
             </mat-list-item>
         </mat-nav-list>
+        <mat-menu #pontuacoes="matMenu">
+            <button mat-menu-item (click)="goToPontuacao(sidenav)"><mat-icon>list_alt</mat-icon><span>Consulta
+                    pontuação</span></button>
+            <button mat-menu-item (click)="goToTop(sidenav)"><mat-icon>star</mat-icon><span>top</span></button>
+        </mat-menu>
     </mat-sidenav>
     <mat-sidenav-content>
         <div *ngIf="openDashboard"><app-home></app-home></div>
@@ -39,5 +44,6 @@
         <div *ngIf="openAgendamentos"><app-live-schedule></app-live-schedule></div>
         <div *ngIf="openPontuacoes"><app-pontuacao></app-pontuacao></div>
         <div *ngIf="openLurkonline"><app-prepare-towatch></app-prepare-towatch></div>
+        <div *ngIf="openTopStreamers"><app-top-pontuacao></app-top-pontuacao></div>
     </mat-sidenav-content>
 </mat-sidenav-container>

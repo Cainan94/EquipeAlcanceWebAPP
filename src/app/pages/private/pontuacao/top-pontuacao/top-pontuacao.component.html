@@ -1,0 +1,45 @@
+<div class="mainContainer">
+    <div class="title">
+        <h2>Listas dos TOPS</h2>
+    </div>
+
+    <div class="selectRangeDate">
+        <h3>Selecione o periodo para consultar os TOPS do periodo.</h3>
+
+        <mat-form-field class="rangeDate">
+            <mat-label>periodo da Pontuação</mat-label>
+            <mat-date-range-input [formGroup]="formRangeDate" [rangePicker]="dateRangePicker" disabled>
+                <input matStartDate placeholder="Start date" formControlName="start">
+                <input matEndDate placeholder="End date" formControlName="end">
+            </mat-date-range-input>
+            <mat-hint>DD/MM/YYYY – DD/MM/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="dateRangePicker"></mat-datepicker-toggle>
+            <mat-date-range-picker #dateRangePicker disabled="false"></mat-date-range-picker>
+        </mat-form-field>
+        <button mat-raised-button class="searchButton" (click)="makeTheList()">
+            <mat-icon style="width: 100%; height: 100%; margin-top: 50%;">search</mat-icon>
+          </button>
+    </div>
+
+    <mat-spinner class="page-loading" *ngIf="isprocess"></mat-spinner>
+
+    <mat-list role="list">
+        <div *ngFor="let pontuacao of this.listTable" style="width: 95%; margin-left: 3%;margin-top: 2%;">
+            <div *ngIf="pontuacao.score >= 35 ">
+                <mat-list-item style="background-color: #6bb36e; "
+                    role="listitem">{{pontuacao.streamer.twitchName}} - {{pontuacao.score.toFixed(2)}}</mat-list-item>
+            </div>
+            <div *ngIf="pontuacao.score < 11 ">
+                <mat-list-item style="background-color: #c7797f; color: white;"
+                    role="listitem">{{pontuacao.streamer.twitchName}} - {{pontuacao.score.toFixed(2)}}</mat-list-item>
+            </div>
+
+            <div *ngIf="pontuacao.score < 35 && pontuacao.score > 10">
+                <mat-list-item style="background-color: #cecf8c;"  role="listitem">{{pontuacao.streamer.twitchName}} -
+                    {{pontuacao.score.toFixed(2)}}</mat-list-item>
+            </div>
+
+
+        </div>
+    </mat-list>
+</div>
